@@ -1,0 +1,15 @@
+RewriteEngine on
+
+RewriteRule ^mascotas/([a-zA-Z0-9--_/]+)$ mascotas-detalle.php?i=$1
+RewriteRule ^internamientos/([a-zA-Z0-9--_/]+)/([a-zA-Z0-9--_/]+)$ internamientos-detalle.php?in=$1&i=$2
+RewriteRule ^citas/([a-zA-Z0-9--_/]+)/([a-zA-Z0-9--_/]+)$ citas-detalle.php?c=$1&i=$2
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.*)$ $1.php
+
+ErrorDocument 404 http://localhost/veterinaria/user/404
+ErrorDocument 403 http://localhost/veterinaria/user/404
+ErrorDocument 500 http://localhost/veterinaria/user/404
+
+Options -indexes
