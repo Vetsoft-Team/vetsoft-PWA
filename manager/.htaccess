@@ -12,8 +12,8 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}.php -f
 RewriteRule ^(.*)$ $1.php
 
-ErrorDocument 404 http://localhost/veterinaria/manager/404
-ErrorDocument 403 http://localhost/veterinaria/manager/404
-ErrorDocument 500 http://localhost/veterinaria/manager/404
+ErrorDocument 404 /manager/404.php
+ErrorDocument 403 /manager/404.php
+ErrorDocument 500 /manager/404.php
 
 Options -indexes

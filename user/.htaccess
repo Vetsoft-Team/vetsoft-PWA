@@ -8,8 +8,8 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}.php -f
 RewriteRule ^(.*)$ $1.php
 
-ErrorDocument 404 http://localhost/veterinaria/user/404
-ErrorDocument 403 http://localhost/veterinaria/user/404
-ErrorDocument 500 http://localhost/veterinaria/user/404
+ErrorDocument 404 /user/404.php
+ErrorDocument 403 /user/404.php
+ErrorDocument 500 /user/404.php
 
 Options -indexes
