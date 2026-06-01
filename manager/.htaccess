@@ -10,10 +10,11 @@ RewriteRule ^ventas/([a-zA-Z0-9--_/]+)$ ventas-detalle.php?i=$1
 
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}.php -f
-RewriteRule ^(.*)$ $1.php
+RewriteRule ^(.*)$ $1.php [L]
 
-ErrorDocument 404 http://localhost/veterinaria/manager/404
-ErrorDocument 403 http://localhost/veterinaria/manager/404
-ErrorDocument 500 http://localhost/veterinaria/manager/404
+# Fallback for 404 (portable between localhost and Hostinger)
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ 404.php [L]
 
 Options -indexes

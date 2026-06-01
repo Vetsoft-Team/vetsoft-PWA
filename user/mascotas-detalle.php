@@ -112,6 +112,8 @@ while ($conf=mysqli_fetch_row ($config)){
 							<div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-end">	
 								<a class="dropdown-item" href="mascotas">Mascotas</a>
 								<a class="dropdown-item" href="mascotas-nuevo">Nueva mascota</a>
+								<hr class="dropdown-divider">
+								<a class="dropdown-item" href="pdf/historial_mascota?mascota=<?php echo $_GET['i'] ?>" target="_blank"><i class="bx bx-download me-2"></i>Descargar Historial</a>
 							</div>
 						</div>
 					</div>
@@ -196,7 +198,15 @@ while ($conf=mysqli_fetch_row ($config)){
 										<div class="row">
 											<a href="javascript:history.back()">
 												<div class="col-sm-12 d-grid gap-2">
-													<button type="submit" class="btn btn-light px-4">Regresar</button>
+													<button type="button" class="btn btn-light px-4">Regresar</button>
+												</div>
+											</a>
+										</div>
+										<hr class="my-2" />
+										<div class="row">
+											<a href="pdf/historial_mascota?mascota=<?php echo $id_mascota ?>" target="_blank">
+												<div class="col-sm-12 d-grid gap-2">
+													<button type="button" class="btn btn-success px-4" style="background-color: #006D5B !important; border: none !important;"><i class="bx bx-download me-2"></i>Descargar Historial</button>
 												</div>
 											</a>
 										</div>

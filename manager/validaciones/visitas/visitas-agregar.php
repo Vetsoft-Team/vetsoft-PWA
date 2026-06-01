@@ -24,6 +24,17 @@ $insertar1 = mysqli_query($mysqli, "INSERT INTO visitas (id_mascota, fecha, moti
 
 if ($insertar1) {
 
+	// Si el usuario logueado es un Doctor, marcar automáticamente su cita pendiente más reciente con esta mascota como atendida (estado = 1)
+	if (isset($_SESSION['rol']) && $_SESSION['rol'] == 3) {
+		$doc_name = $_SESSION['nombre'];
+		$doc_last = $_SESSION['apellidos'];
+		$doctor_q = mysqli_query($mysqli, "SELECT id_doctor FROM doctores WHERE (nombre='$doc_name' AND apellido='$doc_last') OR ('$doc_name' LIKE CONCAT('%', nombre, '%') AND '$doc_last' LIKE CONCAT('%', apellido, '%')) LIMIT 1");
+		if ($doc_row = mysqli_fetch_assoc($doctor_q)) {
+			$doctor_id = $doc_row['id_doctor'];
+			mysqli_query($mysqli, "UPDATE citas SET estado='1' WHERE id_mascota='$id_mascota' AND doctor='$doctor_id' AND estado='0' ORDER BY fecha_cita DESC, id_cita DESC LIMIT 1");
+		}
+	}
+
 
 	/***************************** IMAGENES *****************************/
 	$img_visitas="SELECT max(id_visita) FROM visitas ";

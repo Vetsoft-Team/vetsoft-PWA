@@ -22,6 +22,9 @@ $(document).ready(function(){
     let motivo = $('#motivo').val();
     formData.append('motivo',motivo);
 
+    let descripcion = $('#descripcion').val();
+    formData.append('descripcion',descripcion);
+
 
     if (fecha_cita == '') {
 
@@ -129,8 +132,9 @@ $(document).ready(function(){
            type: 'success',
            title: 'Cita actualizada'
          }).then(function() {
-          window.location = "citas/"+id_cita+"/"+id_mascota;
-        });
+            window.open("pdf/reporte_cita?cita=" + id_cita, "_blank");
+            window.location = "citas/"+id_cita+"/"+id_mascota;
+          });
        }
     //EDITADO CORRECTO
 

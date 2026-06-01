@@ -28,67 +28,94 @@
 						<div class="menu-title">Inicio</div>
 					</a>
 				</li>
-				<li>
-					<a href="estadisticas" class="has-arrow">
-						<div class="parent-icon"><i class="bx bx-category"></i>
-						</div>
-						<div class="menu-title">Estadisticas</div>
-					</a>
-				</li>
+				<?php if ($_SESSION['rol'] == 3) { ?>
+					<!------------------------------------->
+					<li class="menu-label">Panel de Doctor</li>
+					<!------------------------------------->
+					<li>
+						<a href="mis-citas" class="has-arrow">
+							<div class="parent-icon"><i class='bx bx-calendar-star'></i>
+							</div>
+							<div class="menu-title">Mis Citas del Día</div>
+						</a>
+					</li>
+					<li>
+						<a href="mascotas" class="has-arrow">
+							<div class="parent-icon"><i class='bx bx-donate-heart'></i>
+							</div>
+							<div class="menu-title">Mascota/Paciente</div>
+						</a>
+					</li>
+					<li>
+						<a href="internamientos" class="has-arrow">
+							<div class="parent-icon"><i class='bx bx-bookmark-heart'></i>
+							</div>
+							<div class="menu-title">Internamientos</div>
+						</a>
+					</li>
+				<?php } else { ?>
+					<li>
+						<a href="estadisticas" class="has-arrow">
+							<div class="parent-icon"><i class="bx bx-category"></i>
+							</div>
+							<div class="menu-title">Estadisticas</div>
+						</a>
+					</li>
 
-				<!------------------------------------->
-				<li class="menu-label">Menu</li>
-				<!------------------------------------->
+					<!------------------------------------->
+					<li class="menu-label">Menu</li>
+					<!------------------------------------->
 
-				<li>
-					<a href="usuarios" class="has-arrow">
-						<div class="parent-icon"><i class='bx bx-group'></i>
-						</div>
-						<div class="menu-title">Usuarios</div>
-					</a>
-				</li>
-				<li>
-					<a href="mascotas" class="has-arrow">
-						<div class="parent-icon"><i class='bx bx-donate-heart'></i>
-						</div>
-						<div class="menu-title">Mascota/Paciente</div>
-					</a>
-				</li>
-				<li>
-					<a href="internamientos" class="has-arrow">
-						<div class="parent-icon"><i class='bx bx-bookmark-heart'></i>
-						</div>
-						<div class="menu-title">Internamientos</div>
-					</a>
-				</li>
-				<li>
-					<a href="citas" class="has-arrow">
-						<div class="parent-icon"><i class='bx bx-calendar'></i>
-						</div>
-						<div class="menu-title">Calendario de citas</div>
-					</a>
-				</li>
-				<li>
-					<a href="citas-agendar" class="has-arrow">
-						<div class="parent-icon"><i class='bx bx-plus-medical'></i>
-						</div>
-						<div class="menu-title">Agendar cita</div>
-					</a>
-				</li>
-				<li>
-					<a href="citas-agendar?tipo=urgencia" class="has-arrow">
-						<div class="parent-icon"><i class='bx bx-error-circle'></i>
-						</div>
-						<div class="menu-title">Cita de urgencia</div>
-					</a>
-				</li>
-				<li>
-					<a href="doctores" class="has-arrow">
-						<div class="parent-icon"><i class='bx bx-vial'></i>
-						</div>
-						<div class="menu-title">Doctores</div>
-					</a>
-				</li>
+					<li>
+						<a href="usuarios" class="has-arrow">
+							<div class="parent-icon"><i class='bx bx-group'></i>
+							</div>
+							<div class="menu-title">Usuarios</div>
+							</a>
+					</li>
+					<li>
+						<a href="mascotas" class="has-arrow">
+							<div class="parent-icon"><i class='bx bx-donate-heart'></i>
+							</div>
+							<div class="menu-title">Mascota/Paciente</div>
+						</a>
+					</li>
+					<li>
+						<a href="internamientos" class="has-arrow">
+							<div class="parent-icon"><i class='bx bx-bookmark-heart'></i>
+							</div>
+							<div class="menu-title">Internamientos</div>
+						</a>
+					</li>
+					<li>
+						<a href="citas" class="has-arrow">
+							<div class="parent-icon"><i class='bx bx-calendar'></i>
+							</div>
+							<div class="menu-title">Calendario de citas</div>
+						</a>
+					</li>
+					<li>
+						<a href="citas-agendar" class="has-arrow">
+							<div class="parent-icon"><i class='bx bx-plus-medical'></i>
+							</div>
+							<div class="menu-title">Agendar cita</div>
+						</a>
+					</li>
+					<li>
+						<a href="citas-agendar?tipo=urgencia" class="has-arrow">
+							<div class="parent-icon"><i class='bx bx-error-circle'></i>
+							</div>
+							<div class="menu-title">Cita de urgencia</div>
+						</a>
+					</li>
+					<li>
+						<a href="doctores" class="has-arrow">
+							<div class="parent-icon"><i class='bx bx-vial'></i>
+							</div>
+							<div class="menu-title">Doctores</div>
+						</a>
+					</li>
+				<?php } ?>
                 <!--
 				
 				<li class="menu-label">Sistema</li>

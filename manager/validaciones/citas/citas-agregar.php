@@ -9,6 +9,7 @@ $fecha_cita= addslashes($_POST['fecha_cita']);
 $hora_cita= addslashes($_POST['hora_cita']);
 $doctor_cita= addslashes($_POST['doctor_cita']);
 $motivo_cita= addslashes($_POST['motivo_cita']);
+$telefono_cita = addslashes($_POST['telefono_cita']);
 
 date_default_timezone_set('America/Panama');
 $fecha = date('Y-m-d h:i:s');
@@ -39,30 +40,57 @@ if($check_mail>0){
 
 		}
 
-		// --- INICIO INTEGRACION WHATSAPP (CALLMEBOT) ---
-		$info_q = mysqli_query($mysqli, "SELECT m.nombre as mascota, u.telefono, u.nombre as dueno FROM mascotas m INNER JOIN usuarios u ON m.id_usuario = u.id_usuario WHERE m.id_mascota = '$id_mascota'");
-		if ($info = mysqli_fetch_assoc($info_q)) {
-			$doc_q = mysqli_query($mysqli, "SELECT nombre, apellido FROM doctores WHERE id_doctor = '$doctor_cita'");
-			$doc = mysqli_fetch_assoc($doc_q);
-			
-			if(!empty($info['telefono'])) {
-				$telefono = preg_replace('/[^0-9]/', '', $info['telefono']);
-				$nombre_doc = $doc ? $doc['nombre'] . " " . $doc['apellido'] : "";
-				
-				$mensaje = "Hola " . $info['dueno'] . "🐾\n\nSe ha agendado una cita para *" . $info['mascota'] . "*.\n\n📅 Fecha: " . $fecha_cita . "\n⏰ Hora: " . $hora_cita . "\n👨‍⚕️ Doctor: " . $nombre_doc . "\n📌 Motivo: " . $motivo_cita . "\n\n¡Los esperamos en VetSoft!";
-				
-				// Reemplaza con tu API Key real obtenida de CallMeBot enviando un WhatsApp al bot
-				$apikey = "TU_API_KEY_CALLMEBOT"; 
-				
-				$url = "https://api.callmebot.com/whatsapp.php?phone=" . $telefono . "&text=" . urlencode($mensaje) . "&apikey=" . $apikey;
-				
-				$ch = curl_init();
-				curl_setopt($ch, CURLOPT_URL, $url);
-				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-				curl_setopt($ch, CURLOPT_TIMEOUT, 3); // Timeout corto para evitar bloqueos
-				$response = curl_exec($ch);
-				curl_close($ch);
+		// --- INICIO INTEGRACION WHATSAPP (ULTRAMSG) ---
+		if(!empty($telefono_cita)) {
+			// Obtener información para el mensaje
+			$info_q = mysqli_query($mysqli, "SELECT m.nombre as mascota, u.nombre as dueno FROM mascotas m INNER JOIN usuarios u ON m.id_usuario = u.id_usuario WHERE m.id_mascota = '$id_mascota'");
+			$dueno = "Cliente";
+			$mascota = "mascota";
+			if ($info = mysqli_fetch_assoc($info_q)) {
+				$dueno = $info['dueno'];
+				$mascota = $info['mascota'];
 			}
+			
+			$doc_q = mysqli_query($mysqli, "SELECT nombre, apellido FROM doctores WHERE id_doctor = '$doctor_cita'");
+			$nombre_doc = "";
+			if ($doc = mysqli_fetch_assoc($doc_q)) {
+				$nombre_doc = $doc['nombre'] . " " . $doc['apellido'];
+			}
+
+			// Formatear mensaje
+			$mensaje = "Hola " . $dueno . "🐾\n\nSe ha agendado una cita para *" . $mascota . "*.\n\n📅 Fecha: " . $fecha_cita . "\n⏰ Hora: " . $hora_cita . "\n👨‍⚕️ Doctor: " . $nombre_doc . "\n📌 Motivo: " . $motivo_cita . "\n\n¡Los esperamos en VetSoft!";
+
+			// Limpiar teléfono (solo números, el código de país debe estar incluido)
+			$telefono_limpio = preg_replace('/[^0-9]/', '', $telefono_cita);
+
+			// Petición a UltraMsg
+			$params=array(
+				'token' => '1cm48eng20hyyjnl',
+				'to' => $telefono_limpio,
+				'body' => $mensaje
+			);
+			
+			$curl = curl_init();
+			curl_setopt_array($curl, array(
+			  CURLOPT_URL => "https://api.ultramsg.com/instance178364/messages/chat",
+			  CURLOPT_RETURNTRANSFER => true,
+			  CURLOPT_ENCODING => "",
+			  CURLOPT_MAXREDIRS => 10,
+			  CURLOPT_TIMEOUT => 30,
+			  CURLOPT_SSL_VERIFYHOST => 0,
+			  CURLOPT_SSL_VERIFYPEER => 0,
+			  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+			  CURLOPT_CUSTOMREQUEST => "POST",
+			  CURLOPT_POSTFIELDS => http_build_query($params),
+			  CURLOPT_HTTPHEADER => array(
+			    "content-type: application/x-www-form-urlencoded"
+			  ),
+			));
+
+			$response = curl_exec($curl);
+			$err = curl_error($curl);
+
+			curl_close($curl);
 		}
 		// --- FIN INTEGRACION WHATSAPP ---
 

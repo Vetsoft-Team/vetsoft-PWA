@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 25-05-2026 a las 15:34:07
+-- Tiempo de generación: 01-06-2026 a las 03:38:19
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -54,7 +54,26 @@ INSERT INTO `actividad` (`id_actividad`, `id_usuario`, `ip`, `fecha`) VALUES
 (13, 2, '::1', '2026-05-05 11:13:43'),
 (14, 1, '::1', '2026-05-06 12:03:33'),
 (15, 1, '::1', '2026-05-06 12:38:33'),
-(16, 1, '::1', '2026-05-22 12:57:35');
+(16, 1, '::1', '2026-05-22 12:57:35'),
+(17, 1, '::1', '2026-05-28 05:28:37'),
+(18, 1, '::1', '2026-05-28 05:33:38'),
+(19, 1, '::1', '2026-05-28 05:34:19'),
+(20, 2, '::1', '2026-05-28 05:34:49'),
+(21, 1, '::1', '2026-05-28 05:37:11'),
+(22, 1, '::1', '2026-05-28 05:40:04'),
+(23, 1, '::1', '2026-05-28 09:08:42'),
+(24, 33, '::1', '2026-05-28 11:04:57'),
+(25, 2, '::1', '2026-05-28 11:07:55'),
+(26, 1, '::1', '2026-05-28 11:11:20'),
+(27, 29, '::1', '2026-05-28 11:25:16'),
+(28, 29, '::1', '2026-05-29 12:12:47'),
+(29, 2, '::1', '2026-05-29 02:36:35'),
+(30, 1, '::1', '2026-05-29 02:55:47'),
+(31, 2, '::1', '2026-05-29 02:56:20'),
+(32, 1, '::1', '2026-05-29 03:50:35'),
+(33, 2, '::1', '2026-05-29 03:16:52'),
+(34, 1, '::1', '2026-05-31 08:35:53'),
+(35, 2, '::1', '2026-05-31 08:36:08');
 
 -- --------------------------------------------------------
 
@@ -93,11 +112,13 @@ CREATE TABLE `calendario` (
 --
 
 INSERT INTO `calendario` (`id`, `id_mascota`, `id_cita`, `title`, `color`, `start`, `end`) VALUES
-(1, 2, 1, 'Control de vacunas y desparacitación', '#1F9C00', '2026-05-05 18:50:00', '0000-00-00 00:00:00'),
-(2, 1, 2, 'Revisión y progreso Clinico, Evaluación de anvance y procedimientos futuros', '#1F9C00', '2026-05-08 09:30:00', '0000-00-00 00:00:00'),
+(1, 2, 1, 'Control de vacunas y desparacitación', '#A00000', '2026-05-05 18:50:00', '0000-00-00 00:00:00'),
 (3, 1, 3, '4', '#1F9C00', '2026-05-26 12:00:00', '0000-00-00 00:00:00'),
-(4, 2, 4, 'Cita de control y seguimiento de la mascota', '#1F9C00', '2026-05-24 12:30:00', '0000-00-00 00:00:00'),
-(5, 0, 5, 'Urgencia médica', '#1F9C00', '2026-05-28 08:30:00', '0000-00-00 00:00:00');
+(4, 2, 4, 'Cita de control y seguimiento de la mascota', '#A00000', '2026-05-24 12:30:00', '0000-00-00 00:00:00'),
+(5, 0, 5, 'Urgencia médica', '#1F9C00', '2026-05-28 08:30:00', '0000-00-00 00:00:00'),
+(6, 1, 6, 'Cita de desparacitacion', '#A00000', '2026-05-29 10:30:00', '0000-00-00 00:00:00'),
+(7, 3, 7, 'Cita de control', '#1F9C00', '2026-05-29 12:30:00', '0000-00-00 00:00:00'),
+(8, 1, 8, 'Cita de control de Julieta', '#1F9C00', '2026-05-30 14:00:00', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -114,19 +135,22 @@ CREATE TABLE `citas` (
   `doctor` int(11) NOT NULL,
   `motivo` text NOT NULL,
   `fecha_registro` varchar(50) NOT NULL,
-  `estado` int(11) NOT NULL
+  `estado` int(11) NOT NULL,
+  `descripcion` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `citas`
 --
 
-INSERT INTO `citas` (`id_cita`, `id_mascota`, `nombre_mascota`, `fecha_cita`, `hora_cita`, `doctor`, `motivo`, `fecha_registro`, `estado`) VALUES
-(1, 2, NULL, '2026-05-05', '18:50', 2, 'Control de vacunas y desparacitación', '2026-05-05 05:09:44', 0),
-(2, 1, NULL, '2026-05-08', '09:30', 4, 'Revisión y progreso Clinico, Evaluación de anvance y procedimientos futuros', '2026-05-05 05:12:33', 0),
-(3, 1, NULL, '2026-05-26', '12:00', 4, '4', '2026-05-22 01:15:42', 0),
-(4, 2, NULL, '2026-05-24', '12:30', 4, 'Cita de control y seguimiento de la mascota', '2026-05-22 02:18:06', 0),
-(5, 0, NULL, '2026-05-28', '08:30', 4, 'Urgencia médica', '2026-05-22 02:19:03', 0);
+INSERT INTO `citas` (`id_cita`, `id_mascota`, `nombre_mascota`, `fecha_cita`, `hora_cita`, `doctor`, `motivo`, `fecha_registro`, `estado`, `descripcion`) VALUES
+(1, 2, NULL, '2026-05-05', '18:50', 2, 'Control de vacunas y desparacitación', '2026-05-05 05:09:44', 1, NULL),
+(3, 1, NULL, '2026-05-26', '12:00', 4, '4', '2026-05-22 01:15:42', 0, NULL),
+(4, 2, NULL, '2026-05-24', '12:30', 4, 'Cita de control y seguimiento de la mascota', '2026-05-22 02:18:06', 1, NULL),
+(5, 0, NULL, '2026-05-28', '08:30', 4, 'Urgencia médica', '2026-05-22 02:19:03', 0, NULL),
+(6, 1, NULL, '2026-05-29', '10:30', 3, 'Cita de desparacitacion', '2026-05-28 11:13:01', 1, 'Julieta llego con un peso de 12 kg con un peso aceptable para el baño y desparacitacion'),
+(7, 3, NULL, '2026-05-29', '12:30', 5, 'Cita de control', '2026-05-29 03:52:34', 0, NULL),
+(8, 1, NULL, '2026-05-30', '14:00', 5, 'Cita de control de Julieta', '2026-05-29 04:16:01', 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -402,8 +426,8 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id_usuario`, `nombre`, `apellidos`, `ciudad`, `correo`, `telefono`, `clave`, `ultima_conexion`, `fecha_registro`, `ip`, `estado`, `rol`) VALUES
-(1, 'Admin William', 'Archila', 'Canada', 'admin@gmail.com', '+1 234 78 90 00', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '2026-05-22 12:57:35', '2022-03-20 00:00:00', '::1', 0, 1),
-(2, 'William', 'Ferney', 'Cucuta', 'liamarchila97@gmail.com', '3163878745', 'f7c3bc1d808e04732adf679965ccc34ca7ae3441', '2026-05-05 11:13:43', '2026-05-05 12:48:11', '::1', 0, 2),
+(1, 'Admin William', 'Archila', 'Canada', 'admin@gmail.com', '+1 234 78 90 00', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '2026-05-31 08:35:53', '2022-03-20 00:00:00', '::1', 0, 1),
+(2, 'William', 'Ferney', 'Cucuta', 'liamarchila97@gmail.com', '3163878745', 'f7c3bc1d808e04732adf679965ccc34ca7ae3441', '2026-05-31 08:36:08', '2026-05-05 12:48:11', '::1', 0, 2),
 (8, 'Edgar ', 'Gonzalez', 'Cucuta', 'edgar.cliente1@vetsoft.com', '3211548754', '7c4a8d09ca3762af61e59520943dc26494f8941b', 'Nunca', '2026-05-05', '127.0.0.1', 0, 2),
 (9, 'Manuel ', 'rodriguez', 'Los Patios, Norte de Santander', 'manuel.cliente2@vetsoft.com', '0000', '7c4a8d09ca3762af61e59520943dc26494f8941b', 'Nunca', '2026-05-05', '127.0.0.1', 0, 2),
 (10, 'Camila', 'Maldonado', 'Los Patios, Norte de Santander', 'camila.cliente3@vetsoft.com', '0000', '7c4a8d09ca3762af61e59520943dc26494f8941b', 'Nunca', '2026-05-05', '127.0.0.1', 0, 2),
@@ -421,10 +445,11 @@ INSERT INTO `usuarios` (`id_usuario`, `nombre`, `apellidos`, `ciudad`, `correo`,
 (26, 'Miguel', 'Salcedo Blanco', 'Pereira', 'miguel.cliente@gmail.com', '3002222004', 'f865b53623b121fd34ee5426c792e5c33af8c227', '2026-05-05 11:08:15', '2026-05-05 11:08:15', '127.0.0.1', 0, 2),
 (27, 'Natalia', 'Jiménez Rojas', 'Manizales', 'natalia.cliente@gmail.com', '3002222005', 'f865b53623b121fd34ee5426c792e5c33af8c227', '2026-05-05 11:08:15', '2026-05-05 11:08:15', '127.0.0.1', 0, 2),
 (28, 'Dr. Juan', 'Rodríguez Méndez', 'Bogotá', 'juan.doctor@vetsoft.com', '3003333001', 'f865b53623b121fd34ee5426c792e5c33af8c227', '2026-05-05 11:08:15', '2026-05-05 11:08:15', '127.0.0.1', 0, 3),
-(29, 'Dra. Laura', 'Peña Acosta', 'Medellín', 'laura.doctor@vetsoft.com', '3003333002', 'f865b53623b121fd34ee5426c792e5c33af8c227', '2026-05-05 11:08:15', '2026-05-05 11:08:15', '127.0.0.1', 0, 3),
+(29, 'Dra. Laura', 'Peña Acosta', 'Medellín', 'laura.doctor@vetsoft.com', '3003333002', 'f865b53623b121fd34ee5426c792e5c33af8c227', '2026-05-29 12:12:47', '2026-05-05 11:08:15', '::1', 0, 3),
 (30, 'Dr. Pablo', 'Torres Ríos', 'Cali', 'pablo.doctor@vetsoft.com', '3003333003', 'f865b53623b121fd34ee5426c792e5c33af8c227', '2026-05-05 11:08:15', '2026-05-05 11:08:15', '127.0.0.1', 0, 3),
 (31, 'Dra. Marcela', 'Muñoz Agudelo', 'Bucaramanga', 'marcela.doctor@vetsoft.com', '3003333004', 'f865b53623b121fd34ee5426c792e5c33af8c227', '2026-05-05 05:05:59', '2026-05-05 11:08:15', '::1', 0, 3),
-(32, 'Dr. Sebastián', 'Chávez Lara', 'Pasto', 'sebastian.doctor@vetsoft.com', '3003333005', 'f865b53623b121fd34ee5426c792e5c33af8c227', '2026-05-05 11:08:15', '2026-05-05 11:08:15', '127.0.0.1', 0, 3);
+(32, 'Dr. Sebastián', 'Chávez Lara', 'Pasto', 'sebastian.doctor@vetsoft.com', '3003333005', 'f865b53623b121fd34ee5426c792e5c33af8c227', '2026-05-05 11:08:15', '2026-05-05 11:08:15', '127.0.0.1', 0, 3),
+(33, 'Wilmer', 'Ferney', 'Cucuta', 'rr_02@gmail.com', '3224557894', 'b4fac44326371f468d3993b8b7c0272a4d21cd14', '2026-05-28 11:04:57', '2026-05-28 11:04:46', '::1', 0, 2);
 
 -- --------------------------------------------------------
 
@@ -656,7 +681,7 @@ ALTER TABLE `visitas_img`
 -- AUTO_INCREMENT de la tabla `actividad`
 --
 ALTER TABLE `actividad`
-  MODIFY `id_actividad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id_actividad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT de la tabla `caja`
@@ -668,13 +693,13 @@ ALTER TABLE `caja`
 -- AUTO_INCREMENT de la tabla `calendario`
 --
 ALTER TABLE `calendario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `citas`
 --
 ALTER TABLE `citas`
-  MODIFY `id_cita` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_cita` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `configuracion`
@@ -734,7 +759,7 @@ ALTER TABLE `razas`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT de la tabla `vacunas`

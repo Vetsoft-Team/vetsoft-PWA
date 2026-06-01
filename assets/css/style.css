@@ -79,6 +79,22 @@
 }
 
 
+/* ===== FIX: Footer posicionado correctamente al final del contenido ===== */
+.page-footer {
+    position: relative !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: 100% !important;
+    margin-top: 20px;
+}
+
+/* Ajuste del page-wrapper para que el footer fluya naturalmente */
+.page-wrapper {
+    padding-bottom: 0 !important;
+}
+/* ===== FIN FIX Footer ===== */
+
 /* ESTILOS DE WHATSAPP */
 .float{
     position:fixed;

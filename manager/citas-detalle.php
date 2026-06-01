@@ -144,6 +144,7 @@ while ($conf=mysqli_fetch_row ($config)){
 								$motivo_c = $cit[6];
 								$fecha_registro_c = $cit[7];
 								$estado_c = $cit[8];
+								$descripcion_c = isset($cit[9]) ? $cit[9] : '';
 
 							}
 
@@ -231,6 +232,15 @@ while ($conf=mysqli_fetch_row ($config)){
 											</li>
 										</ul>
 
+										<br>
+										<br>
+										<center>
+											<h6>IMPRIMIR REPORTE</h6>
+											<a href="pdf/reporte_cita?cita=<?php echo $id_cita_c; ?>" target="_blank">
+												<img src="../assets/img/iconos/reporte.png" width="80">
+											</a>
+										</center>
+
 									</div>
 								</div>
 							</div>
@@ -288,6 +298,14 @@ while ($conf=mysqli_fetch_row ($config)){
 											</div>
 											<div class="col-sm-9">
 												<textarea class="form-control" rows="3" id="motivo"><?php echo $motivo_c; ?></textarea>
+											</div>
+										</div>
+										<div class="row mb-3">
+											<div class="col-sm-3">
+												<h6 class="mb-0">Descripción de la consulta</h6>
+											</div>
+											<div class="col-sm-9">
+												<textarea class="form-control" rows="3" id="descripcion"><?php echo $descripcion_c; ?></textarea>
 											</div>
 										</div>
 
@@ -356,7 +374,7 @@ while ($conf=mysqli_fetch_row ($config)){
 	<script src="../assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js"></script>
 	<script src="../assets/js/app.js"></script>
 	<script src="../assets/js/sweetalert2.min.js"></script>
-	<script src="validaciones/citas/js/citas-editar.js"></script>
+	<script src="validaciones/citas/js/citas-editar.js?v=<?php echo time(); ?>"></script>
 
 </body>
 </html>

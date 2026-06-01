@@ -225,19 +225,17 @@ while ($conf=mysqli_fetch_row ($config)){
 															}
 														}
 
-													
+													<div class="overlay toggle-icon"></div>
+
+	</div>
+
+
+		
+		
 
 												</script>
 
-
-		<div class="overlay toggle-icon"></div>
-		<a class="back-to-top"><i class='bx bxs-up-arrow-alt'></i></a>
 		
-		<!-- Footer -->
-		<?php include'include/footer.php' ?>
-		<!-- Footer -->
-
-	</div>
 
 	<script src="../assets/js/bootstrap.bundle.min.js"></script>
 	<script src="../assets/js/jquery.min.js"></script>
@@ -253,6 +251,10 @@ while ($conf=mysqli_fetch_row ($config)){
 
 	</script>
 	<script src="../assets/js/app.js"></script>
+<!-- Footer -->
+		<?php include'include/footer.php' ?>
+		<!-- Footer -->
 
+		<a class="back-to-top"><i class='bx bxs-up-arrow-alt'></i></a>
 </body>
 </html>

@@ -1,11 +1,12 @@
+Options -Indexes -MultiViews
 RewriteEngine on
 
+# Add .php if file exists without it
+RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME}.php -f
-RewriteRule ^(.*)$ $1.php
+RewriteRule ^([^.]+)$ $1.php [L]
 
-ErrorDocument 404 http://localhost/veterinaria/404
-ErrorDocument 403 http://localhost/veterinaria/404
-ErrorDocument 500 http://localhost/veterinaria/404
-
-Options -indexes
+# Fallback for 404
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ 404.php [L]

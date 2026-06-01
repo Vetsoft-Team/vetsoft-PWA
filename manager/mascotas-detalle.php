@@ -1025,11 +1025,6 @@ while ($conf=mysqli_fetch_row ($config)){
 														}
 
 													
-
-												</script>
-
-
-
 		<div class="overlay toggle-icon"></div>
 		<a class="back-to-top"><i class='bx bxs-up-arrow-alt'></i></a>
 
@@ -1038,6 +1033,11 @@ while ($conf=mysqli_fetch_row ($config)){
 		<!-- Footer -->
 
 	</div>
+
+												</script>
+
+
+
 
 
 	<script src="../assets/js/bootstrap.bundle.min.js"></script>

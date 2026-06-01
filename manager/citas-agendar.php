@@ -12,7 +12,7 @@ if (@!$_SESSION['correo']) {
 <html lang="en">
 
 <head>
-	<script src="validaciones/mascotas/js/jquery-3.4.1.min.Js"></script>
+	<script src="validaciones/mascotas/js/jquery-3.4.1.min.js"></script>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
@@ -127,10 +127,10 @@ while ($conf=mysqli_fetch_row ($config)){
 														<select class="form-control" id="id_mascota" required>
 															<option value="">Seleccionar Mascota</option>
 															<?php
-															$sql_m=("SELECT m.id_mascota, m.nombre, u.nombre as user_n, u.apellidos as user_a FROM mascotas m JOIN usuarios u ON m.id_usuario = u.id_usuario WHERE m.estado=0 ORDER BY m.id_mascota DESC");
+															$sql_m=("SELECT m.id_mascota, m.nombre, u.nombre as user_n, u.apellidos as user_a, u.telefono FROM mascotas m JOIN usuarios u ON m.id_usuario = u.id_usuario WHERE m.estado=0 ORDER BY m.id_mascota DESC");
 															$query_m=mysqli_query($mysqli,$sql_m);
 															while($arreglo_m=mysqli_fetch_array($query_m)){
-																echo '<option value="'.$arreglo_m['id_mascota'].'" style="color: black;">'.$arreglo_m['nombre'].' (Dueño: '.$arreglo_m['user_n'].' '.$arreglo_m['user_a'].')</option>';
+																echo '<option value="'.$arreglo_m['id_mascota'].'" data-telefono="'.$arreglo_m['telefono'].'" style="color: black;">'.$arreglo_m['nombre'].' (Dueño: '.$arreglo_m['user_n'].' '.$arreglo_m['user_a'].')</option>';
 															}
 															?>
 														</select>
@@ -152,13 +152,17 @@ while ($conf=mysqli_fetch_row ($config)){
 											</div>
 
 											<div class="row mb-3">
-												<div class="col-sm-6">
+												<div class="col-sm-4">
 													<label class="form-label">Fecha de la cita</label>
 													<input type="date" class="form-control" min="<?php echo date('Y-m-d')?>" id="fecha_cita" required>
 												</div>
-												<div class="col-sm-6">
+												<div class="col-sm-4">
 													<label class="form-label">Hora de la cita</label>
 													<input type="time" class="form-control" id="hora_cita" required>
+												</div>
+												<div class="col-sm-4">
+													<label class="form-label">Teléfono (WhatsApp)</label>
+													<input type="tel" class="form-control" id="telefono_cita" placeholder="+CódigoNúmero" required>
 												</div>
 											</div>
 
@@ -194,12 +198,23 @@ while ($conf=mysqli_fetch_row ($config)){
 	
 	<script>
 		$(document).ready(function(){
+			$('#id_mascota').change(function() {
+				let selectedOption = $(this).find('option:selected');
+				let telefono = selectedOption.data('telefono');
+				if(telefono) {
+					$('#telefono_cita').val(telefono);
+				} else {
+					$('#telefono_cita').val('');
+				}
+			});
+
 			$('#citas-agendar-btn').click(function(){
 				let id_mascota = $('#id_mascota').val();
 				let fecha_cita = $('#fecha_cita').val();
 				let hora_cita = $('#hora_cita').val();
 				let doctor_cita = $('#doctor_cita').val();
 				let motivo_cita = $('#motivo_cita').val();
+				let telefono_cita = $('#telefono_cita').val();
 
 				if (id_mascota == '') {
 					Swal.fire('Advertencia', 'Selecciona una mascota', 'warning');
@@ -209,7 +224,13 @@ while ($conf=mysqli_fetch_row ($config)){
 					Swal.fire('Advertencia', 'Ingresa la fecha', 'warning');
 				} else if (hora_cita == '') {
 					Swal.fire('Advertencia', 'Ingresa la hora', 'warning');
+				} else if (telefono_cita == '') {
+					Swal.fire('Advertencia', 'Ingresa el teléfono', 'warning');
 				} else {
+					// Deshabilitar botón para evitar doble clic
+					let btn = $('#citas-agendar-btn');
+					btn.prop('disabled', true).text('Guardando...');
+
 					$.ajax({
 						url: 'validaciones/citas/citas-agregar',
 						type: 'post',
@@ -218,16 +239,26 @@ while ($conf=mysqli_fetch_row ($config)){
 							fecha_cita: fecha_cita,
 							hora_cita: hora_cita,
 							doctor_cita: doctor_cita,
-							motivo_cita: motivo_cita
+							motivo_cita: motivo_cita,
+							telefono_cita: telefono_cita
 						},
-						success: function(data) {
-							if (data == 0) {
+						success: function(response) {
+							let data = $.trim(response);
+							if (data == '0') {
 								Swal.fire('Cita registrada', 'La cita fue agendada exitosamente', 'success').then(function() {
 									window.location = "citas";
 								});
+							} else if (data == '1') {
+								btn.prop('disabled', false).text('Guardar Cita');
+								Swal.fire('Advertencia', 'Ya existe una cita en esa fecha y hora con el doctor seleccionado', 'warning');
 							} else {
+								btn.prop('disabled', false).text('Guardar Cita');
 								Swal.fire('Error', 'Ocurrió un error al guardar la cita', 'error');
 							}
+						},
+						error: function() {
+							btn.prop('disabled', false).text('Guardar Cita');
+							Swal.fire('Error', 'Error de conexión con el servidor', 'error');
 						}
 					});
 				}

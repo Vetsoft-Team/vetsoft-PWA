@@ -25,9 +25,13 @@ if($check_mail>0){
 
 	$veterinaria=sha1(trim($clave));
 
-	$query=mysqli_query($mysqli,"INSERT INTO usuarios (nombre, apellidos, ciudad, correo, telefono, clave, ultima_conexion, fecha_registro, ip, estado, rol, top) VALUES('$nombre','$apellidos','$ciudad','$correo','$telefono','$veterinaria','$fecha','$fecha','$ip','0','2','1')");
+	$query=mysqli_query($mysqli,"INSERT INTO usuarios (nombre, apellidos, ciudad, correo, telefono, clave, ultima_conexion, fecha_registro, ip, estado, rol) VALUES('$nombre','$apellidos','$ciudad','$correo','$telefono','$veterinaria','$fecha','$fecha','$ip','0','2')");
 
-	echo 1;
+	if($query){
+		echo 1;
+	}else{
+		echo mysqli_error($mysqli);
+	}
 
 }
 

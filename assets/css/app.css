@@ -49,6 +49,8 @@ a {
 
 	width: 100%;
 
+	min-height: 100vh;
+
 	position: relative
 
 }
@@ -173,13 +175,15 @@ a {
 
 .page-wrapper {
 
-	height: 100%;
+	min-height: 100%;
 
 	margin-top: 60px;
 
 	margin-bottom: 0px;
 
-	margin-left: 250px
+	margin-left: 250px;
+
+	padding-bottom: 50px
 
 }
 
@@ -194,6 +198,8 @@ a {
 	background: rgb(0 0 0 / 20%);
 
 	position: absolute;
+
+	bottom: 0;
 
 	left: 250px;
 
